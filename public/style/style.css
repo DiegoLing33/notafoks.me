@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "Montserrat";
+    font-weight: normal;
+    src: url("fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-weight: bold;
+    src: url("fonts/Montserrat-Bold.ttf") format("truetype");
+}
+
+/*
+
+#263238 - primary
+#4f5b62 - primary light
+#000a12 - primary dark
+#90a4ae - secondary
+#c1d5e0 - secondary light
+#62757f - secondary dark
+
+#000000 - text primary
+#ffffff - text secondary
+
+ */
+
+html, body{
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+    background: #ffffff;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}

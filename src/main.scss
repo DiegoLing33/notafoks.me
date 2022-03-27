@@ -1,0 +1,62 @@
+$types: 'primary', 'primary-light', 'primary-dark', 'secondary', 'secondrary-light', 'secondary-dark';
+
+$primary: #263238;
+$primaryLight: #4f5b62;
+$primaryDark: #000a12;
+$secondary: #90a4ae;
+$secondaryLight: #c1d5e0;
+$secondaryDark: #62757f;
+$textPrimary: #000000;
+$textSecondary: #ffffff;
+
+
+$typesMap: ('primary': $primary, 'primary-light': $primaryLight, 'primary-dark': $primaryDark, 'secondary': $secondary,
+        'secondary-light': $secondaryLight, 'secondary-dark': $secondaryDark);
+
+$typesMapText: ('primary': $textSecondary, 'primary-light': $textSecondary, 'primary-dark': $textSecondary, 'secondary': $textPrimary,
+        'secondary-light': $textPrimary, 'secondary-dark': $textPrimary);
+
+@each $name, $color in $typesMap {
+  .bg-#{$name} {
+    background-color: #{$color};
+    color: #{$typesMapText($name)};
+  }
+}
+@each $name, $color in $typesMap {
+  .text-#{$name} {
+    color: #{$color};
+  }
+}
+
+body{
+  background-color: white;
+  color: $textPrimary;
+}
+
+a {
+  color: $secondary;
+  transition: color 0.2s;
+  &:hover{
+    color: $primaryLight;
+  }
+}
+
+h1 {
+  font-family: "Montserrat", Helvetica, serif;
+  font-weight: bold;
+  font-size: 4vw;
+  line-height: 1;
+  margin-bottom: 16px;
+
+  @media (max-width: 944px) {
+    font-size: 50px;
+    text-align: center;
+  }
+}
+
+.mobile-like{
+  text-align: left;
+  @media (max-width: 944px) {
+    text-align: center;
+  }
+}

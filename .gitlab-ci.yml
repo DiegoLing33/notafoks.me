@@ -1,0 +1,37 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  IMAGE_NAME: notafoks-app
+  IMAGE_GROUP: notafoks
+  APP_SOURCE_PORT: 8080
+  APP_DESTINATION_PORT: 4401
+
+
+build:
+  stage: build
+  only:
+    - main
+  tags:
+    - docker
+  image: docker:stable
+  script:
+    - docker build -t $YANDEX_REGISTRY/$IMAGE_GROUP/$IMAGE_NAME:$CI_PIPELINE_IID .
+    - docker push $YANDEX_REGISTRY/$IMAGE_GROUP/$IMAGE_NAME:$CI_PIPELINE_IID
+
+deploy:
+  stage: deploy
+  only:
+    - main
+  tags:
+    - docker
+  image: docker:stable
+  before_script:
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - eval `ssh-agent -s`
+    - printf '%s\n' "$SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -o StrictHostKeyChecking=no -t -p22 gitlab@lionfox.ru "echo $SSH_PASSWORD | sudo -S bash deploy.sh $IMAGE_NAME $IMAGE_GROUP $YANDEX_REGISTRY_HOST $YANDEX_REGISTRY_ID $APP_SOURCE_PORT $APP_DESTINATION_PORT $CI_PIPELINE_IID"
